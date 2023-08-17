@@ -11,8 +11,9 @@ The regex pattern to be examined in this tutorial will be one that matches a hex
 
 We will breakdown each component in detail later, but at a high level, the regex pattern above will match any text that meets the following criteria:
 
-• The string starts with an optional '#' character
-• The rest of the string consists of a total of 6 or 3 characters that is any combination of the characters 'a-f' and/or '0-9'.
+• The string starts with an optional '#' character.
+
+• The rest of the string consists of a total of 6 or 3 characters that is any combination of the characters 'a-f' (lowercase) and/or '0-9'.
 
 ## Table of Contents
 
@@ -46,14 +47,26 @@ There are more examples of quantifiers i.e. { n, }, { n, x }, +, etc., but our e
 
 ### Grouping Constructs
 
-Grouping constructs in a regex pattern allow us to break a string into sections where certain groups of text can be matched and are defined by parentheses '()'. This was needed in our example because it allowed us to separate the OR ('|') operation (will discuss in detail later) from the rest of the regex pattern. For our example, the grouping construct was used to set the conditional matching of either the 6-length character or the 3-length character after the matching of the optional '#' character. If not for the grouping, the entire regex pattern would've been considered for conditional matching and the '#" character would've been included for the condition.
+Grouping constructs in a regex pattern allow us to break a string into sections where certain groups of text can be matched and are defined by parentheses '()'. This was needed in our example because it allowed us to separate the OR ('|') operation (will discuss in detail later) from the rest of the regex pattern. For our example, the grouping construct was used to set the conditional matching of either the 6-length character or the 3-length character after the matching of the optional '#' character. If not for the grouping, the entire regex pattern would've been considered for conditional matching and the '#" character would've been included for the condition. Grouping constructs (or 'capture groups') can be referenced by a numbered backreference. (i.e. '\1' for the first capture group)
 
 ### Bracket Expressions
 
+Bracket expressions are denoted by square brackets '[]' and can represent any character(s) or range of characters that we want to include. Our example uses the bracket expression '[a-f0-9]', which means that the pattern will match any character between a-f (lowercase) and any number between 0-9.
+
 ### Character Classes
+
+Character classes define a set of characters that can be matched and bracket expressions are an example of character classes. Other examples include (but are not limited to):
+
+• '.' - the dot character is a wildcard character that will match any character except the newline character '\n'.
+
+• \d - this character will match any number and is equivalent to the bracket expression [0-9].
+
+• \w - this character matches any alphanumeric character and the underscore character. This is equivalent to the bracket expression [A-Za-z0-9].
 
 ### The OR Operator
 
+The OR operator '|' is used when we want our expression to have multiple options to match between. In our example, we used the OR operator to match the character class [a-f0-9] with either 3 total characters or 6 total characters. Either case will be matched. The OR operator is not limited to choosing between two cases. Multiple cases can be included and the options separated between the OR symbol '|' are acceptable for matching.
+
 ## Author
 
-A short section about the author with a link to the author's GitHub profile (replace with your information and a link to your profile)
+[Joshua Williams](https://github.com/codehashira28)
