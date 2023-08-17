@@ -33,11 +33,21 @@ The regex example above is considered a literal so it is wrapped between the sla
 
 The characters '^' and '$' are called **anchors**.
 
-The '^' character signifies a string that starts with the text that comes after it, while the '$' character signifies a string that ends with the text that precedes it. In our example above, the pattern will match any string that starts with an optional '#' character (we will discuss why it is optional later) and ends with a 6 or 3 character-long text that includes character 'a-f' and/or '0-9'.
+The '^' character signifies a string that starts with the text that comes after it, while the '$' character signifies a string that ends with the text that precedes it. In our example above, the pattern will match any string that starts with an optional '#' character (we will discuss why it is optional later) and ends with a 6 or 3 character-long text that includes characters 'a-f' and/or '0-9'. A simpler expression would be the following:
+
+```/^#[abc][0-9]$/```
+
+The regex pattern above will match a string that starts with the '#' character, has a, b, or c as the middle character, and ends with a number.
 
 ### Quantifiers
 
-Quantifiers in a regex pattern are a way to limit or specify the number of matches in a pattern. In our example, we have three instances of quantifiers: ?, {6}, and {3}. They mean the following:
+Quantifiers in a regex pattern are a way to limit or specify the number of matches in a pattern. In our example, we have three instances of quantifiers: 
+
+```/#?/```
+
+```/[a-f0-9]{6}/```
+
+```/[a-f0-9]{3}/```
 
 • ? - This will match a pattern zero or one time (think of it as a pattern that may or may not occur, optional)
 
@@ -47,11 +57,15 @@ There are more examples of quantifiers i.e. { n, }, { n, x }, +, etc., but our e
 
 ### Grouping Constructs
 
-Grouping constructs in a regex pattern allow us to break a string into sections where certain groups of text can be matched and are defined by parentheses '()'. This was needed in our example because it allowed us to separate the OR ('|') operation (will discuss in detail later) from the rest of the regex pattern. For our example, the grouping construct was used to set the conditional matching of either the 6-length character or the 3-length character after the matching of the optional '#' character. If not for the grouping, the entire regex pattern would've been considered for conditional matching and the '#" character would've been included for the condition. Grouping constructs (or 'capture groups') can be referenced by a numbered backreference. (i.e. '\1' for the first capture group)
+Grouping constructs in a regex pattern allow us to break a string into sections where certain groups of text can be matched and are defined by parentheses '()'. This was needed in our example because it allowed us to separate the OR ('|') operation (will discuss in detail later) from the rest of the regex pattern. For our example, the following grouping construct was used:
+
+```/([a-f0-9]{6}|[a-f0-9]{3})/```
+
+This grouping construct was used to separate the conditional matching of either the 6-length character or the 3-length character bracket expression ```/[a-f0-9]/``` from the matching of the optional '#' character. If not for the grouping, the entire regex pattern would've been considered for conditional matching and the '#" character would've been included with the condition. Grouping constructs (or 'capture groups') can also be referenced by a numbered backreference (i.e. '\1' for the first capture group) if you wanted to repeat the same capture group in a pattern without retyping it.
 
 ### Bracket Expressions
 
-Bracket expressions are denoted by square brackets '[]' and can represent any character(s) or range of characters that we want to include. Our example uses the bracket expression '[a-f0-9]', which means that the pattern will match any character between a-f (lowercase) and any number between 0-9.
+Bracket expressions are denoted by square brackets '[]' and can represent any character(s) or range of characters that we want to include. Our example uses the bracket expression ```/[a-f0-9]/```, which means that the pattern will match any character between a-f (lowercase) and any number between 0-9.
 
 ### Character Classes
 
@@ -61,11 +75,13 @@ Character classes define a set of characters that can be matched and bracket exp
 
 • \d - this character will match any number and is equivalent to the bracket expression [0-9].
 
-• \w - this character matches any alphanumeric character and the underscore character. This is equivalent to the bracket expression [A-Za-z0-9].
+• \w - this character matches any alphanumeric character and the underscore character. This is equivalent to the bracket expression ```/[A-Za-z0-9]/```.
 
 ### The OR Operator
 
-The OR operator '|' is used when we want our expression to have multiple options to match between. In our example, we used the OR operator to match the character class [a-f0-9] with either 3 total characters or 6 total characters. Either case will be matched. The OR operator is not limited to choosing between two cases. Multiple cases can be included and the options separated between the OR symbol '|' are acceptable for matching.
+The OR operator '|' is used when we want our expression to have multiple options to match between. In our example, we used the OR operator to match the character class [a-f0-9] with either 3 total characters or 6 total characters. Either case will be matched. The OR operator is not limited to choosing between two cases. Multiple cases can be included and the options separated between the OR symbol '|' are acceptable for matching. For example, the following regex expression will match 'yes', 'no', or 'maybe':
+
+```/yes|no|maybe/```
 
 ## Author
 
